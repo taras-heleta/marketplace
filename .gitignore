@@ -1,0 +1,13 @@
+# PyCharm specific files
+.idea/
+*.iws
+*.ipr
+*.iml
+
+# Virtual environment
+.venv_python3_13/
+.venv/
+
+#secret_files
+/core/secret.py
+!/core/secret.py
