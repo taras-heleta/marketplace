@@ -11,7 +11,8 @@ class Role(models.TextChoices):
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
-    full_name = models.CharField(max_length=255, blank=True, null=True)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
     phone_number = models.CharField(max_length=20, blank=True, null=True)
     avatar = models.CharField(max_length=256, blank=True, null=True)
     role = models.CharField(max_length=10, choices=Role.choices, default=Role.USER)
