@@ -16,3 +16,6 @@ __pycache__/
 #secret_files
 /core/secret.py
 !/core/secret.py
+
+# Mac
+.DS_Store
