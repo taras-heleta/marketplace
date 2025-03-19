@@ -88,7 +88,7 @@ DATABASES = {
         'PORT': secret.DB_PORT,
     },
 
-    'local': {
+    'default_local': {
          'ENGINE': 'django.db.backends.sqlite3',
          'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
      }
@@ -139,7 +139,7 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = f'{BASE_DIR}/media'
 MEDIA_URL = '/media/'
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -154,6 +154,6 @@ SIMPLE_JWT = {
 }
 
 AUTHENTICATION_BACKENDS = [
-    'users.backends.EmailBackend',
+    'users.backends.EmailAuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
