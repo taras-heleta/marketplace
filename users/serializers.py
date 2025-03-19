@@ -6,6 +6,9 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate
 
 class UserSerializer(serializers.ModelSerializer):
+    # Password is not required for update
+    password = serializers.CharField(write_only=True, required=False) 
+
     class Meta:
         model = CustomUser
         fields = (
@@ -22,16 +25,19 @@ class UserSerializer(serializers.ModelSerializer):
             'password'
         )
         read_only_fields = ('id', 'created_at', 'updated_at')
-        extra_kwargs = {
-            'password': {'write_only': True}
-        }
 
     def create(self, validated_data):
-        # username = email, because we use email for login, it's by default for simplejwt 
+        if 'password' not in validated_data:
+            raise serializers.ValidationError({'password': 'This field is required for registration.'})
+            
         validated_data['username'] = validated_data.get('email')
         validated_data['password'] = make_password(validated_data.get('password'))
-        
         return super().create(validated_data)
+
+    def update(self, instance, validated_data):
+        if 'password' in validated_data:
+            validated_data['password'] = make_password(validated_data.get('password'))
+        return super().update(instance, validated_data)
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     username_field = 'email'
